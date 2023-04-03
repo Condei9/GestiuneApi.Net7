@@ -29,7 +29,7 @@ namespace GestiuneSaliNET7.Controllers
                           Ok(await _context.Labs.ToListAsync()) :
                           Problem("Entity set 'ApplicationDBContext.Labs'  is null.");
         }
-
+/*
         // GET: LabRooms/Details/5
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
@@ -165,6 +165,6 @@ namespace GestiuneSaliNET7.Controllers
         private bool LabRoomModelExists(int id)
         {
           return (_context.Labs?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        }*/
     }
 }

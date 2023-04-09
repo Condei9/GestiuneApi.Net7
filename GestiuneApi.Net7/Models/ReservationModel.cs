@@ -12,7 +12,7 @@ namespace GestiuneSaliNET7.Models
         [Required]
         public int DayNumber { get; set; }
         [Required]
-        public int RoomId { get; set; }
+        public string RoomName { get; set; }
         [Required]
         public int StartTimeSlot { get; set; }
         [Required]
@@ -20,7 +20,11 @@ namespace GestiuneSaliNET7.Models
         [Required]
         public string? Group { get; set; }
         [Required]
-        public bool IsActive { get; set; } = false;
+        public int IsOnParity { get; set; }
+        [Required]
+        public string SubjectName { get; set; }
+        [Required]
+        public bool IsLab { get; set; }
 
         public ReservationModel()
         {
@@ -28,9 +32,11 @@ namespace GestiuneSaliNET7.Models
             Groups = "Alo";
             TeacherName = "Alo";
             DayNumber = 0;
-            RoomId = 0;
+            RoomName = "0";
             Group = "Alo";
-            IsActive = false;
+            IsOnParity = 2;
+            SubjectName= "0";
+            IsLab = false;
 
         }
 

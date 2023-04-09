@@ -24,12 +24,13 @@ namespace GestiuneSaliNET7.Controllers
         // GET: ReservationModel
         public async Task<IActionResult> Index()
         {
-              return _context.Reservations != null ? 
-                          Ok(await _context.Reservations.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDBContext.Reservations'  is null.");
+            return _context.Reservations != null ?
+                        Ok(await _context.Reservations.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDBContext.Reservations'  is null.");
         }
 
         // GET: ReservationModel/Details/5
+        [HttpGet("{id}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Reservations == null)

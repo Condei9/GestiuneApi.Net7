@@ -10,4 +10,10 @@
         Moderator,
         User
     }
+    public enum Parity
+    {
+        Even,
+        Odd,
+        Both
+    }
 }

@@ -22,6 +22,7 @@ namespace GestiuneSaliNET7.Controllers
         }
 
         // GET: RequestModels
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
               return _context.Requests != null ? 
@@ -30,6 +31,7 @@ namespace GestiuneSaliNET7.Controllers
         }
 
         // GET: RequestModels/Details/5
+        [HttpGet("{id}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Requests == null)
@@ -48,6 +50,7 @@ namespace GestiuneSaliNET7.Controllers
         }
 
         // GET: RequestModels/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return Ok();
@@ -70,6 +73,7 @@ namespace GestiuneSaliNET7.Controllers
         }
 
         // GET: RequestModels/Edit/5
+        [HttpGet("{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Requests == null)
@@ -88,7 +92,7 @@ namespace GestiuneSaliNET7.Controllers
         // POST: RequestModels/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,User,Room,Groups")] RequestModel requestModel)
         {
@@ -139,7 +143,7 @@ namespace GestiuneSaliNET7.Controllers
         }
 
         // POST: RequestModels/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("{id}"), ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

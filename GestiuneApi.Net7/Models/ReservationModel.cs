@@ -6,7 +6,7 @@ namespace GestiuneSaliNET7.Models
     public class ReservationModel : Entity
     {
         [Required]
-        public string? Groups { get; set; }
+        public bool Groups { get; set; }
         [Required]
         public string? TeacherName { get; set; }
         [Required]
@@ -29,7 +29,7 @@ namespace GestiuneSaliNET7.Models
         public ReservationModel()
         {
 
-            Groups = "Alo";
+            Groups = false;
             TeacherName = "Alo";
             DayNumber = 0;
             RoomName = "0";

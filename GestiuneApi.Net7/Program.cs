@@ -1,5 +1,6 @@
 using GestiuneSaliNET7.Data;
 using GestiuneSaliNET7.Repository;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,8 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<ILogin, AuthenticateLogin>();
+builder.Services.AddCors();
+builder.Services.AddMvc();
 
 // Add services to the container.
 
@@ -25,6 +28,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(
+        options => options.WithOrigins("http://localhost").AllowAnyMethod()
+    );
+
+app.UseMvc();
 
 app.UseHttpsRedirection();
 

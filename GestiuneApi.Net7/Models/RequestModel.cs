@@ -2,18 +2,10 @@
 
 namespace GestiuneSaliNET7.Models
 {
-    public class RequestModel
+    public class RequestModel : Entity
     {
-        [Key]
-        [Required]
-        public int Id { get; set; }
-
         public string User { get; set; }
 
-        public string Room { get; set; }
-
-        public string Groups { get; set; }
-
-
+        public string Cerere { get; set; }
     }
 }

@@ -61,7 +61,7 @@ namespace GestiuneSaliNET7.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,User,Room,Groups")] RequestModel requestModel)
+        public async Task<IActionResult> Create([Bind("User,Cerere")] RequestModel requestModel)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace GestiuneSaliNET7.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost("{id}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,User,Room,Groups")] RequestModel requestModel)
+        public async Task<IActionResult> Edit(int id, [Bind("User,Cerere")] RequestModel requestModel)
         {
             if (id != requestModel.Id)
             {

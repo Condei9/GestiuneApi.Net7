@@ -24,7 +24,7 @@ namespace GestiuneSaliNET7.Data
 
         public DbSet<RequestModel> Requests { get; set; }
 
-        public DbSet<GestiuneSaliNET7.Models.Day> Day { get; set; } = default!;
+        public DbSet<Day> Day { get; set; } = default!;
 
     }
 }

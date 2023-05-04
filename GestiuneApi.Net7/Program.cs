@@ -4,13 +4,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<ILogin, AuthenticateLogin>();
-builder.Services.AddCors();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:4200/"
+                                              ).AllowAnyHeader()
+                                                  .AllowAnyMethod(); 
+                      });
+});
 builder.Services.AddMvc();
 
 // Add services to the container.
@@ -29,11 +39,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(
-        options => options.WithOrigins("http://localhost").AllowAnyMethod()
-    );
-
-app.UseMvc();
 
 app.UseHttpsRedirection();
 

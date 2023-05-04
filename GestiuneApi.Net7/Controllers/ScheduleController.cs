@@ -17,6 +17,7 @@ namespace GestiuneSaliNET7.Controllers
             _context = context;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
 

@@ -50,13 +50,6 @@ namespace GestiuneSaliNET7.Controllers
         }
 
         // POST: LabRooms/Create
-        [HttpPost]
-        public IActionResult Create()
-        {
-            return Ok();
-        }
-
-        // POST: LabRooms/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -68,23 +61,6 @@ namespace GestiuneSaliNET7.Controllers
                 _context.Add(labRoomModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            return Ok(labRoomModel);
-        }
-
-        // GET: LabRooms/Edit/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Labs == null)
-            {
-                return NotFound();
-            }
-
-            var labRoomModel = await _context.Labs.FindAsync(id);
-            if (labRoomModel == null)
-            {
-                return NotFound();
             }
             return Ok(labRoomModel);
         }
@@ -125,7 +101,7 @@ namespace GestiuneSaliNET7.Controllers
         }
 
         // GET: LabRooms/Delete/5
-        [HttpGet("{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Labs == null)
@@ -140,9 +116,14 @@ namespace GestiuneSaliNET7.Controllers
                 return NotFound();
             }
 
+            _context.Labs.Remove(labRoomModel);
+
+            await _context.SaveChangesAsync();
+
             return Ok(labRoomModel);
         }
 
+        /*
         // POST: LabRooms/Delete/5
         [HttpPost("{id}"), ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -161,7 +142,7 @@ namespace GestiuneSaliNET7.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        */
         private bool LabRoomModelExists(int id)
         {
           return (_context.Labs?.Any(e => e.Id == id)).GetValueOrDefault();

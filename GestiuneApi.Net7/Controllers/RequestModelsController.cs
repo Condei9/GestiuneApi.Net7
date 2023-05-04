@@ -49,13 +49,6 @@ namespace GestiuneSaliNET7.Controllers
             return Ok(requestModel);
         }
 
-        // GET: RequestModels/Create
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return Ok();
-        }
-
         // POST: RequestModels/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -73,21 +66,21 @@ namespace GestiuneSaliNET7.Controllers
         }
 
         // GET: RequestModels/Edit/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Requests == null)
-            {
-                return NotFound();
-            }
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null || _context.Requests == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var requestModel = await _context.Requests.FindAsync(id);
-            if (requestModel == null)
-            {
-                return NotFound();
-            }
-            return Ok(requestModel);
-        }
+        //    var requestModel = await _context.Requests.FindAsync(id);
+        //    if (requestModel == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(requestModel);
+        //}
 
         // POST: RequestModels/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -125,6 +118,7 @@ namespace GestiuneSaliNET7.Controllers
         }
 
         // GET: RequestModels/Delete/5
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Requests == null)
@@ -139,9 +133,14 @@ namespace GestiuneSaliNET7.Controllers
                 return NotFound();
             }
 
+            _context.Requests.Remove(requestModel);
+
+            await _context.SaveChangesAsync();
+
             return Ok(requestModel);
         }
 
+        /*
         // POST: RequestModels/Delete/5
         [HttpPost("{id}"), ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -160,7 +159,7 @@ namespace GestiuneSaliNET7.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        */
         private bool RequestModelExists(int id)
         {
           return (_context.Requests?.Any(e => e.Id == id)).GetValueOrDefault();

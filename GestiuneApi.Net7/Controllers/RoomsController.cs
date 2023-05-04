@@ -49,13 +49,6 @@ namespace GestiuneSaliNET7.Controllers
             return Ok(roomModel);
         }
 
-        // GET: Rooms/Create
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return Ok();
-        }
-
         // POST: Rooms/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -68,23 +61,6 @@ namespace GestiuneSaliNET7.Controllers
                 _context.Add(roomModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            return Ok(roomModel);
-        }
-
-        // GET: Rooms/Edit/5
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Rooms == null)
-            {
-                return NotFound();
-            }
-
-            var roomModel = await _context.Rooms.FindAsync(id);
-            if (roomModel == null)
-            {
-                return NotFound();
             }
             return Ok(roomModel);
         }
@@ -140,9 +116,14 @@ namespace GestiuneSaliNET7.Controllers
                 return NotFound();
             }
 
+            _context.Rooms.Remove(roomModel);
+
+            await _context.SaveChangesAsync();
+
             return Ok(roomModel);
         }
 
+        /*
         // POST: Rooms/Delete/5
         [HttpPost("{id}"), ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -161,7 +142,7 @@ namespace GestiuneSaliNET7.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        */
         private bool RoomModelExists(int id)
         {
           return (_context.Rooms?.Any(e => e.Id == id)).GetValueOrDefault();

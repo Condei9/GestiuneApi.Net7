@@ -50,13 +50,6 @@ namespace GestiuneSaliNET7.Controllers
             return Ok(userModel);
         }
 
-        // GET: UserModels/Create
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return Ok();
-        }
-
         // POST: UserModels/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -70,23 +63,6 @@ namespace GestiuneSaliNET7.Controllers
                 _context.Add(userModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            return Ok(userModel);
-        }
-
-        // GET: UserModels/Edit/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Users == null)
-            {
-                return NotFound();
-            }
-
-            var userModel = await _context.Users.FindAsync(id);
-            if (userModel == null)
-            {
-                return NotFound();
             }
             return Ok(userModel);
         }
@@ -127,7 +103,7 @@ namespace GestiuneSaliNET7.Controllers
         }
 
         // GET: UserModels/Delete/5
-        [HttpGet("{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Users == null)
@@ -142,9 +118,14 @@ namespace GestiuneSaliNET7.Controllers
                 return NotFound();
             }
 
+            _context.Users.Remove(userModel);
+
+            await _context.SaveChangesAsync();
+
             return Ok(userModel);
         }
 
+        /*
         // POST: UserModels/Delete/5
         [HttpPost("{id}"), ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -163,7 +144,7 @@ namespace GestiuneSaliNET7.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        */
         private bool UserModelExists(int id)
         {
           return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();

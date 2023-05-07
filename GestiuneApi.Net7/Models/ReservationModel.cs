@@ -29,20 +29,5 @@ namespace GestiuneSaliNET7.Models
         public string SubjectName { get; set; }
         [Required]
         public bool IsLab { get; set; }
-
-        public ReservationModel()
-        {
-
-            Groups = false;
-            TeacherName = "Alo";
-            DayNumber = 0;
-            RoomName = "0";
-            Group = "Alo";
-            IsOnParity = 2;
-            SubjectName= "0";
-            IsLab = false;
-
-        }
-
     }
 }

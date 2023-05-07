@@ -10,7 +10,18 @@
         {
             Reservations = new List<ReservationModel>
             {
-                new ReservationModel()
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
             };
         }
     }

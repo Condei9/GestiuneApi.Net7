@@ -54,7 +54,7 @@ namespace GestiuneSaliNET7.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Groups,TeacherName,DayNumber,RoomId,Time,Duration,Group,Id,Name")] ReservationModel reservationModel)
+        public async Task<IActionResult> Create([Bind("Groups,TeacherName,DayNumber,RoomId,Time,Duration,Group,Subgroup,Serie,Id,Name")] ReservationModel reservationModel)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +70,7 @@ namespace GestiuneSaliNET7.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost("{Id}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Groups,TeacherName,DayNumber,RoomId,Time,Duration,Group,Id,Name")] ReservationModel reservationModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Groups,TeacherName,DayNumber,RoomId,Time,Duration,Group,Subgroup,Serie,Id,Name")] ReservationModel reservationModel)
         {
             if (id != reservationModel.Id)
             {

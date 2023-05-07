@@ -20,6 +20,10 @@ namespace GestiuneSaliNET7.Models
         [Required]
         public string? Group { get; set; }
         [Required]
+        public int Subgroup { get; set; }
+        [Required]
+        public string? Serie { get; set; }
+        [Required]
         public int IsOnParity { get; set; }
         [Required]
         public string SubjectName { get; set; }

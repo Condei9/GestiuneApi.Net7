@@ -55,9 +55,10 @@ namespace GestiuneSaliNET7.Controllers
                 }
 
                 calendar.Add(dayReservations);
+               
             }
-
-            return Ok(reservations);
+           
+            return Ok(x);
         }
     }
 }

@@ -16,4 +16,11 @@
         Odd,
         Both
     }
+
+    public enum Subgrupa
+    {
+        Default,
+        SGR1,
+        SGR2
+    }
 }

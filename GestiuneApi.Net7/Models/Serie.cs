@@ -1,4 +1,6 @@
-﻿namespace GestiuneSaliNET7.Models
+﻿using GestiuneSaliNET7.Models;
+
+namespace GestiuneSaliNET7.Models
 {
     public class Serie
     {
@@ -11,6 +13,36 @@
             Grupe = new List<Grupa>()
             {
                 new Grupa()
+            };
+        }
+
+        public Serie(string idSerie)
+        {
+            Id = idSerie[0];
+            Name = idSerie.Substring(1);
+
+            Grupe = new List<Grupa>()
+            {
+                new Grupa
+                {
+                    Id = "0",
+                    Name = "3" + Id + "1" + Name
+                },
+                new Grupa
+                {
+                    Id = "0",
+                    Name = "3" + Id + "2" + Name
+                },
+                new Grupa
+                {
+                    Id = "0",
+                    Name = "3" + Id + "3" + Name
+                },
+                new Grupa
+                {
+                    Id = "0",
+                    Name = "3" + Id + "4" + Name
+                }
             };
         }
     }

@@ -10,7 +10,16 @@
         {
             Subgrupe = new List<Subgrupa>()
             {
-                new Subgrupa()
+                new Subgrupa
+                {
+                    Id = (int)Utils.Subgrupa.SGR1,
+                    Name = "Subgrupa 1"
+                },
+                new Subgrupa
+                {
+                    Id = (int)Utils.Subgrupa.SGR2,
+                    Name = "Subgrupa 2"
+                }
             };
         }
     }

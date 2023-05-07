@@ -17,21 +17,21 @@ namespace GestiuneSaliNET7.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Index()
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Index(string? id)
         {
-
             Serie x = new Serie();
-
+            //de creat seria respectiva si populat cu grupe
             
             string json1 = JsonSerializer.Serialize(x);
 
             // retrieve all reservations from the database
-            var reservations = await _context.Reservations.ToListAsync();
+            var reservations = await _context.Reservations.Where(f => f.Serie == id).ToListAsync();
 
             // create a calendar system for a week with the reservations on a 1h time slot system
             var calendar = new List<List<ReservationModel>>();
 
+            // de adaptat algoritmul pt serie
             for (int i = 0; i < 4; i++) // loop through each day of the week
             {
                 var dayReservations = new List<ReservationModel>();

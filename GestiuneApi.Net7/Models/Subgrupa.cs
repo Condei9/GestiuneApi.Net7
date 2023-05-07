@@ -10,7 +10,31 @@
         {
             Week = new List<Day>()
             {
-                new Day()
+                new Day
+                {
+                    Id = 0,
+                    Name = "Luni"
+                },
+                new Day
+                {
+                    Id = 1,
+                    Name = "Marti"
+                },
+                new Day
+                {
+                    Id = 2,
+                    Name = "Miercuri"
+                },
+                new Day
+                {
+                    Id = 3,
+                    Name = "Joi"
+                },
+                new Day
+                {
+                    Id = 4,
+                    Name = "Vineri"
+                },
             };
         }
     }

@@ -18,7 +18,9 @@ namespace GestiuneSaliNET7.Models
 
         public Serie(string idSerie)
         {
-            Id = idSerie[0];
+            var x = 0;
+            int.TryParse(idSerie.First().ToString(), out x);
+            Id = x;
             Name = idSerie.Substring(1);
 
             Grupe = new List<Grupa>()

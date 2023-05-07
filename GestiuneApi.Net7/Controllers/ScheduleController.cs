@@ -20,7 +20,7 @@ namespace GestiuneSaliNET7.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Index(string? id)
         {
-            Serie x = new Serie();
+            Serie x = new Serie(id);
             //de creat seria respectiva si populat cu grupe
             
             string json1 = JsonSerializer.Serialize(x);

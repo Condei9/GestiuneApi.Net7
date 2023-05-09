@@ -68,7 +68,7 @@ namespace GestiuneSaliNET7.Controllers
         // POST: ReservationModel/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost("{Id}")]
+        [HttpPut("{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Groups,TeacherName,DayNumber,RoomId,Time,Duration,Group,Subgroup,Serie,Id,Name")] ReservationModel reservationModel)
         {
@@ -101,7 +101,7 @@ namespace GestiuneSaliNET7.Controllers
         }
 
         // GET: ReservationModel/Delete/5
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Reservations == null)

@@ -36,9 +36,11 @@ namespace GestiuneSaliNET7.Controllers
 
                 subgr.Week[reservation.DayNumber].Reservations[reservation.StartTimeSlot] = reservation;
 
-                for(int i = 1; i <= reservation.TimeSlotsUsed; i++)
+                for(int i = 1; i < reservation.TimeSlotsUsed; i++)
                 {
-                    subgr.Week[reservation.DayNumber].Reservations.RemoveAt(reservation.StartTimeSlot + 1);
+                   
+                        subgr.Week[reservation.DayNumber].Reservations.RemoveAt(reservation.StartTimeSlot + 1);
+                   
                 }
             }
            

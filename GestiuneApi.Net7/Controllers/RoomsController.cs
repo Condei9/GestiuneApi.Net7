@@ -31,7 +31,7 @@ namespace GestiuneSaliNET7.Controllers
         }
 
         // GET: Rooms/Details/5
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Rooms == null)
@@ -54,7 +54,7 @@ namespace GestiuneSaliNET7.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Capacity,Id,Name")] RoomModel roomModel)
+        public async Task<IActionResult> Create([Bind("Capacity,id,Name")] RoomModel roomModel)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace GestiuneSaliNET7.Controllers
         // POST: Rooms/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost("{Id}")]
+        [HttpPut("{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Capacity,Id,Name")] RoomModel roomModel)
         {

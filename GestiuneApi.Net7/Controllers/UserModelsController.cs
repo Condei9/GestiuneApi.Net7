@@ -70,7 +70,7 @@ namespace GestiuneSaliNET7.Controllers
         // POST: UserModels/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost("{id}")]
+        [HttpPut("{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Email,Password,Role,Id,Name")] UserModel userModel)
         {

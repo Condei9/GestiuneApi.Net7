@@ -7,5 +7,8 @@ namespace GestiuneSaliNET7.Models
        
         [Required]
         public int Capacity { get; set; }
+
+        [Required]
+        public bool labRoom { get; set; }
     }
 }

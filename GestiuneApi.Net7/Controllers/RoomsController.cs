@@ -54,7 +54,7 @@ namespace GestiuneSaliNET7.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Capacity,id,Name")] RoomModel roomModel)
+        public async Task<IActionResult> Create([Bind("Capacity,labRoom,id,Name")] RoomModel roomModel)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +70,7 @@ namespace GestiuneSaliNET7.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPut("{id}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Capacity,Id,Name")] RoomModel roomModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Capacity,labRoom,Id,Name")] RoomModel roomModel)
         {
             if (id != roomModel.Id)
             {

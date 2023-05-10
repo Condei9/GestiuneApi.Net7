@@ -1,4 +1,5 @@
-﻿using GestiuneSaliNET7.Interfaces;
+﻿using GestiuneApi.Net7.Models;
+using GestiuneSaliNET7.Interfaces;
 using GestiuneSaliNET7.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,9 @@ namespace GestiuneSaliNET7.Data
         public DbSet<RequestModel> Requests { get; set; }
 
         public DbSet<Day> Day { get; set; } = default!;
+
+        public DbSet<MaterieModel> Materii { get; set; }
+
 
     }
 }

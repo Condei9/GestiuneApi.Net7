@@ -53,8 +53,8 @@ namespace GestiuneSaliNET7.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Capacity,labRoom,id,Name")] RoomModel roomModel)
+       
+        public async Task<IActionResult> Create([Bind("Capacity,labRoom,Name")] RoomModel roomModel)
         {
             if (ModelState.IsValid)
             {
@@ -68,9 +68,9 @@ namespace GestiuneSaliNET7.Controllers
         // POST: Rooms/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPut("{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Capacity,labRoom,Id,Name")] RoomModel roomModel)
+        [HttpPost("{id}")]
+        
+        public async Task<IActionResult> Edit(int id, [Bind("Capacity,Id,labRoom,Name")] RoomModel roomModel)
         {
             if (id != roomModel.Id)
             {
@@ -96,7 +96,7 @@ namespace GestiuneSaliNET7.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
+            } 
             return Ok(roomModel);
         }
 

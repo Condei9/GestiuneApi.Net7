@@ -23,4 +23,11 @@
         SGR1,
         SGR2
     }
+
+    public enum RequestState
+    {
+        Pending,
+        Accepted,
+        Refused
+    }
 }

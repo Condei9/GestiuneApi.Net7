@@ -30,8 +30,8 @@ namespace GestiuneSaliNET7.Controllers
                         Problem("Entity set 'ApplicationDBContext.Users'  is null.");
         }
 
-        [HttpGet("{anMaterie}")]
-        public async Task<IActionResult> Details(int? anMaterie)
+        [HttpGet("search")]
+        public async Task<IActionResult> Details([FromQuery]int? anMaterie)
         {
             if (anMaterie == null || _context.Materii == null)
             {
@@ -40,6 +40,23 @@ namespace GestiuneSaliNET7.Controllers
 
             var materieModel = await _context.Materii.Where(x=>x.anMaterie==anMaterie).ToListAsync();
                
+            if (materieModel == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(materieModel);
+        }
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Details2(int? id)
+        {
+            if (id == null || _context.Materii == null)
+            {
+                return NotFound();
+            }
+
+            var materieModel = await _context.Materii
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (materieModel == null)
             {
                 return NotFound();
@@ -60,7 +77,7 @@ namespace GestiuneSaliNET7.Controllers
             }
             return Ok(materieModel);
         }
-        [HttpPut("{id}")]
+        [HttpPost("{id}")]
         
         public async Task<IActionResult> Edit(int id,  MaterieModel materieModel)
         {

@@ -35,14 +35,14 @@ namespace GestiuneSaliNET7.Controllers
         {
             if (anMaterie == null || _context.Materii == null)
             {
-                return NotFound();
+                return NotFound(StatusCode(404));
             }
 
             var materieModel = await _context.Materii.Where(x=>x.anMaterie==anMaterie).ToListAsync();
                
             if (materieModel == null)
             {
-                return NotFound();
+                return NotFound(StatusCode(404));
             }
 
             return Ok(materieModel);
@@ -52,38 +52,40 @@ namespace GestiuneSaliNET7.Controllers
         {
             if (id == null || _context.Materii == null)
             {
-                return NotFound();
+                return NotFound(StatusCode(404));
             }
 
             var materieModel = await _context.Materii
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (materieModel == null)
             {
-                return NotFound();
+                return NotFound(StatusCode(404));
             }
 
             return Ok(materieModel);
         }
-
+       
         [HttpPost]
-        
         public async Task<IActionResult> Create( MaterieModel materieModel)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(materieModel);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // return RedirectToAction(nameof(Index));
+                return Ok(StatusCode(200));
             }
-            return Ok(materieModel);
+            return Ok(StatusCode(200));
+               
         }
+       
         [HttpPost("{id}")]
         
         public async Task<IActionResult> Edit(int id,  MaterieModel materieModel)
         {
             if (id != materieModel.Id)
             {
-                return NotFound();
+                return NotFound(StatusCode(404));
             }
 
             if (ModelState.IsValid)
@@ -97,17 +99,20 @@ namespace GestiuneSaliNET7.Controllers
                 {
                     if (!MaterieModelExists(materieModel.Id))
                     {
-                        return NotFound();
+                        return NotFound(StatusCode(404));
                     }
                     else
                     {
+                        
                         throw;
+                       
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                 //return RedirectToAction(nameof(Index));
+                return Ok(StatusCode(200));
             }
-            return Ok(materieModel);
-
+            //  return Ok(StatusCode(200));
+            return Ok(StatusCode(200));
 
         }
         [HttpDelete("{id}")]
@@ -129,7 +134,9 @@ namespace GestiuneSaliNET7.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok(materieModel);
+             return Ok(StatusCode(200));
+            
+           // return StatusCode(200);
         }
 
         private bool MaterieModelExists(int id)

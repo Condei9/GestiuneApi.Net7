@@ -60,7 +60,8 @@ namespace GestiuneSaliNET7.Controllers
             {
                 _context.Add(roomModel);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return Ok(StatusCode(200));
             }
             return Ok(roomModel);
         }
@@ -95,7 +96,8 @@ namespace GestiuneSaliNET7.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return Ok(StatusCode(200));
             } 
             return Ok(roomModel);
         }
@@ -106,21 +108,22 @@ namespace GestiuneSaliNET7.Controllers
         {
             if (id == null || _context.Rooms == null)
             {
-                return NotFound();
+                return NotFound(StatusCode(404));
             }
 
             var roomModel = await _context.Rooms
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (roomModel == null)
             {
-                return NotFound();
+                return NotFound(StatusCode(404));
             }
 
             _context.Rooms.Remove(roomModel);
 
             await _context.SaveChangesAsync();
 
-            return Ok(roomModel);
+            //return Ok(roomModel);
+            return Ok(StatusCode(200));
         }
 
         /*

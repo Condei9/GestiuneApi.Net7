@@ -11,6 +11,7 @@ namespace GestiuneSaliNET7.Repository
         public AuthenticateLogin(ApplicationDBContext context)
         {
             _context = context;
+
         }
         public async Task<UserModel> AuthenticateUser(string email, string passcode)
         {

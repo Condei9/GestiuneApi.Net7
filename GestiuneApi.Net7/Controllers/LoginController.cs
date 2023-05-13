@@ -77,7 +77,6 @@ namespace GestiuneSaliNET7.Controllers
                 return BadRequest();
             }
 
-
             var validate = TokenManager.ValidateToken(authToken.token);
             
             if(validate == null)

@@ -57,7 +57,7 @@ namespace GestiuneSaliNET7.Controllers
                 if (issuccess.Result != null)
                 {
                     TempData["email"] = userModel.Email;
-                    var res = new { message = "Success", token };
+                    var res = new { message = "Success", token,issuccess.Result.Email,issuccess.Result.Role,issuccess.Result.Name };
                     return Ok(res);
                 }
                 else
@@ -84,7 +84,7 @@ namespace GestiuneSaliNET7.Controllers
                 return BadRequest();
             }
 
-            return Ok();
+            return Ok(true);
         }
     }
 }

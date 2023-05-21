@@ -18,33 +18,75 @@ namespace GestiuneSaliNET7.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Index(string? id)
+        public async Task<IActionResult> Index(string? idSerie)
         {
-            Serie x = new Serie(id);
+            Serie x = new Serie(idSerie);
             
             string json1 = JsonSerializer.Serialize(x);
 
             // retrieve all reservations from the database
-            var reservations = await _context.Reservations.Where(f => f.Serie == id).ToListAsync();
+            var reservations = await _context.Reservations.Where(f => f.Serie == idSerie).ToListAsync();
 
             // de adaptat algoritmul pt serie
-            foreach(var reservation in reservations) 
+            foreach (var reservation in reservations) 
             {
                 var aux = x.Grupe.FirstOrDefault(a => reservation.Group.Contains(a.Name));
 
                 var subgr = aux.Subgrupe.FirstOrDefault(b => b.Id == reservation.Subgroup);
 
                 subgr.Week[reservation.DayNumber].Reservations[reservation.StartTimeSlot] = reservation;
+            }
 
-                for(int i = 1; i < reservation.TimeSlotsUsed; i++)
+            foreach (var reservation in reservations)
+            {
+                for (int i = 1; i < reservation.TimeSlotsUsed; i++)
                 {
-                   
-                        subgr.Week[reservation.DayNumber].Reservations.RemoveAt(reservation.StartTimeSlot + 1);
-                   
+                    var aux = x.Grupe.FirstOrDefault(a => reservation.Group.Contains(a.Name));
+
+                    var subgr = aux.Subgrupe.FirstOrDefault(b => b.Id == reservation.Subgroup);
+
+                    subgr.Week[reservation.DayNumber].Reservations.RemoveAt(reservation.StartTimeSlot + 1);
                 }
             }
            
             return Ok(x);
+        }
+
+        [HttpGet("{idSerie}/{idGrupa}")]
+        public async Task<IActionResult> Index(string? idSerie, string? idGrupa)
+        {
+            Serie x = new Serie(idSerie);
+
+            string json1 = JsonSerializer.Serialize(x);
+
+            // retrieve all reservations from the database
+            var reservations = await _context.Reservations.Where(f => f.Serie == idSerie).ToListAsync();
+
+            // de adaptat algoritmul pt serie
+            foreach (var reservation in reservations)
+            {
+                var aux = x.Grupe.FirstOrDefault(a => reservation.Group.Contains(a.Name));
+
+                var subgr = aux.Subgrupe.FirstOrDefault(b => b.Id == reservation.Subgroup);
+
+                subgr.Week[reservation.DayNumber].Reservations[reservation.StartTimeSlot] = reservation;
+            }
+
+            foreach (var reservation in reservations)
+            {
+                for (int i = 1; i < reservation.TimeSlotsUsed; i++)
+                {
+                    var aux = x.Grupe.FirstOrDefault(a => reservation.Group.Contains(a.Name));
+
+                    var subgr = aux.Subgrupe.FirstOrDefault(b => b.Id == reservation.Subgroup);
+
+                    subgr.Week[reservation.DayNumber].Reservations.RemoveAt(reservation.StartTimeSlot + 1);
+                }
+            }
+
+            var returnedGrupa = x.Grupe.FirstOrDefault(p => p.Name == idGrupa);
+
+            return Ok(returnedGrupa);
         }
     }
 }

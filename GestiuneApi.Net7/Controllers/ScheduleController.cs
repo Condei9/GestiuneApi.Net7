@@ -17,7 +17,7 @@ namespace GestiuneSaliNET7.Controllers
             _context = context;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{idSerie}")]
         public async Task<IActionResult> Index(string? idSerie)
         {
             Serie x = new Serie(idSerie);

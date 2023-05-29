@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GestiuneSaliNET7.Data;
 using GestiuneSaliNET7.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace GestiuneSaliNET7.Controllers
 {
@@ -47,6 +48,25 @@ namespace GestiuneSaliNET7.Controllers
             }
 
             return Ok(requestModel);
+        }
+
+
+        [HttpGet("email")]
+        public async Task<IActionResult> Email([FromQuery] string? email)
+        {
+            if (email == null || _context.Requests == null)
+            {
+                return NotFound(StatusCode(404));
+            }
+
+            var requestModels = await _context.Requests.Where(x => x.Email == email).ToListAsync();
+
+            if (requestModels == null)
+            {
+                return NotFound(StatusCode(404));
+            }
+
+            return Ok(requestModels);
         }
 
         // POST: RequestModels/Create
@@ -98,8 +118,22 @@ namespace GestiuneSaliNET7.Controllers
             {
                 try
                 {
-                    _context.Update(requestModel);
-                    await _context.SaveChangesAsync();
+                    var currentRequest = _context.Requests.FirstOrDefault(u => u.Id == id);
+                    if (currentRequest == null)
+                        return NotFound();
+
+                    if (requestModel != null && !requestModel.Cerere.IsNullOrEmpty() )
+                        {
+                            currentRequest.Cerere = requestModel.Cerere;
+                        }
+                        if (requestModel != null && currentRequest.RequestState == 0 )
+                        {
+                            currentRequest.RequestState = requestModel.RequestState;
+                        }
+                            _context.Update(currentRequest);
+                        await _context.SaveChangesAsync();
+                    
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -116,6 +150,8 @@ namespace GestiuneSaliNET7.Controllers
             }
             return Ok(requestModel);
         }
+
+
 
         // GET: RequestModels/Delete/5
         [HttpDelete("{id}")]
@@ -140,26 +176,7 @@ namespace GestiuneSaliNET7.Controllers
             return Ok(requestModel);
         }
 
-        /*
-        // POST: RequestModels/Delete/5
-        [HttpPost("{id}"), ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Requests == null)
-            {
-                return Problem("Entity set 'ApplicationDBContext.Requests'  is null.");
-            }
-            var requestModel = await _context.Requests.FindAsync(id);
-            if (requestModel != null)
-            {
-                _context.Requests.Remove(requestModel);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        */
+      
         private bool RequestModelExists(int id)
         {
           return (_context.Requests?.Any(e => e.Id == id)).GetValueOrDefault();

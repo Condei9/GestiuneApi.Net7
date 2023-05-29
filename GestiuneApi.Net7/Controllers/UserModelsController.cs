@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GestiuneSaliNET7.Data;
 using GestiuneSaliNET7.Models;
 using GestiuneSaliNET7.Utils;
+using Microsoft.IdentityModel.Tokens;
 
 namespace GestiuneSaliNET7.Controllers
 {
+    
     [ApiController]
     [Route("[controller]")]
     public class UserModelsController : Controller
@@ -83,8 +84,40 @@ namespace GestiuneSaliNET7.Controllers
             {
                 try
                 {
-                    _context.Update(userModel);
+                   
+                    var currentUser = _context.Users.FirstOrDefault(u => u.Id == id);
+                 if(currentUser != null) {  
+                        if (userModel != null && !userModel.Name.IsNullOrEmpty() && userModel.Name != currentUser.Name)
+                        {
+                            currentUser.Name = userModel.Name;
+                        }
+
+                        if (userModel != null && !userModel.Email.IsNullOrEmpty()  && userModel.Email != currentUser.Email)
+                        {
+                            currentUser.Email = userModel.Email;
+                        }
+
+                        if (userModel != null && !userModel.Password.IsNullOrEmpty()   && userModel.Password != currentUser.Password )
+                        {
+                            currentUser.Password = userModel.Password.Hash();
+                        }
+
+                        if (  userModel.Role != currentUser.Role)
+                        {
+                            currentUser.Role = userModel.Role;
+                        }
+
+
+
+
+
+
+                        _context.Update(currentUser);
                     await _context.SaveChangesAsync();
+                    
+
+                    }
+                 else { return NotFound(); }
                 }
                 catch (DbUpdateConcurrencyException)
                 {

@@ -12,6 +12,11 @@ namespace GestiuneSaliNET7.Data
             : base(options)
         {
         }
+
+        public ApplicationDBContext()
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

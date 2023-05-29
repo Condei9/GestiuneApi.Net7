@@ -4,6 +4,7 @@ using GestiuneSaliNET7.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestiuneSaliNET7.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230529162157_readdedDayTable")]
+    partial class readdedDayTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,6 +43,22 @@ namespace GestiuneSaliNET7.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Materii");
+                });
+
+            modelBuilder.Entity("GestiuneSaliNET7.Models.Day", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Day");
                 });
 
             modelBuilder.Entity("GestiuneSaliNET7.Models.GroupModel", b =>
@@ -121,6 +140,9 @@ namespace GestiuneSaliNET7.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("DayId")
+                        .HasColumnType("int");
+
                     b.Property<int>("DayNumber")
                         .HasColumnType("int");
 
@@ -167,6 +189,8 @@ namespace GestiuneSaliNET7.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DayId");
 
                     b.ToTable("Reservations");
                 });
@@ -420,6 +444,13 @@ namespace GestiuneSaliNET7.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("GestiuneSaliNET7.Models.ReservationModel", b =>
+                {
+                    b.HasOne("GestiuneSaliNET7.Models.Day", null)
+                        .WithMany("Reservations")
+                        .HasForeignKey("DayId");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -469,6 +500,11 @@ namespace GestiuneSaliNET7.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GestiuneSaliNET7.Models.Day", b =>
+                {
+                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }

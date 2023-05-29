@@ -30,8 +30,6 @@ namespace GestiuneSaliNET7.Data
 
         public DbSet<RequestModel> Requests { get; set; }
 
-        public DbSet<Day> Day { get; set; } = default!;
-
         public DbSet<MaterieModel> Materii { get; set; }
 
 

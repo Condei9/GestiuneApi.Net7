@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GestiuneSaliNET7.Data;
 using GestiuneSaliNET7.Models;
+using GestiuneSaliNET7.Interfaces;
 
 namespace GestiuneSaliNET7.Controllers
 {
@@ -54,12 +55,87 @@ namespace GestiuneSaliNET7.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         
+       
         public async Task<IActionResult> Create([Bind("Groups,TeacherName,DayNumber,RoomId,Time,Duration,Group,Subgroup,Serie,Name")] ReservationModel reservationModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(reservationModel);
-                await _context.SaveChangesAsync();
+
+                var reservation = new ReservationModel();
+                var resList = new List<ReservationModel>();
+
+                if (!reservationModel.IsLab && reservationModel.Groups)
+                {
+                    var grupa = 0;
+                    var subgrupa = 0;
+                    
+                    for (int i = 0; i < 8; i++)
+                    {
+                        subgrupa = i % 2 == 0 ? 1 : 2;
+                        grupa = i % 2 == 0 ? grupa + 1 : grupa;
+                        reservation = new ReservationModel
+                        {
+                            Id = reservationModel.Id,
+                            Name = reservationModel.Name,
+                            Groups = reservationModel.Groups,
+                            TeacherName = reservationModel.TeacherName,
+                            DayNumber = reservationModel.DayNumber,
+                            RoomName = reservationModel.RoomName,
+                            StartTimeSlot = reservationModel.StartTimeSlot,
+                            TimeSlotsUsed = reservationModel.TimeSlotsUsed,
+                            Group = reservationModel.Group,
+                            Subgroup = reservationModel.Subgroup,
+                            Serie = reservationModel.Serie,
+                            IsOnParity= reservationModel.IsOnParity,
+                            SubjectName = reservationModel.SubjectName,
+                            IsLab = reservationModel.IsLab
+                        };
+                        reservation.Group = "3" + reservation.Serie.Substring(0, 1) + grupa + reservation.Serie[1..];
+                        reservation.Subgroup = subgrupa;
+                        resList.Add(reservation);
+                    }
+                    _context.Reservations.AddRange(resList);
+
+                }
+                else if(reservationModel.IsLab && reservationModel.Groups)
+                {
+
+                 
+                    var subgrupa = 1;
+                    for (int i = 0; i < 2; i++)
+                    {
+             
+                        subgrupa++;
+                        reservation = new ReservationModel
+                        {
+                            Id = reservationModel.Id,
+                            Name = reservationModel.Name,
+                            Groups = reservationModel.Groups,
+                            TeacherName = reservationModel.TeacherName,
+                            DayNumber = reservationModel.DayNumber,
+                            RoomName = reservationModel.RoomName,
+                            StartTimeSlot = reservationModel.StartTimeSlot,
+                            TimeSlotsUsed = reservationModel.TimeSlotsUsed,
+                            Group = reservationModel.Group,
+                            Subgroup = reservationModel.Subgroup,
+                            Serie = reservationModel.Serie,
+                            IsOnParity = reservationModel.IsOnParity,
+                            SubjectName = reservationModel.SubjectName,
+                            IsLab = reservationModel.IsLab
+                        }; ;
+                        reservation.Group = "3" + reservation.Serie.Substring(0, 1) + reservationModel.Group + reservation.Serie[1..];
+                        reservation.Subgroup = subgrupa;
+                    }
+                    _context.Reservations.AddRange(resList);
+                }
+                else
+                {
+                        reservation = reservationModel;
+                        reservation.Group = "3" + reservation.Serie.Substring(0, 1) + reservationModel.Group + reservation.Serie[1..];
+                        _context.Add(reservation);
+                }
+                  await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             return Ok(reservationModel);

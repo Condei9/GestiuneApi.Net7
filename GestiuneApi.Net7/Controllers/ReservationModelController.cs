@@ -26,8 +26,53 @@ namespace GestiuneSaliNET7.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return _context.Reservations != null ?
-                        Ok(await _context.Reservations.ToListAsync()) :
+
+            var reservations = await _context.Reservations.ToListAsync();
+            var filteredReservations = new List<ReservationModel>();
+            var courseIndex = 0;
+
+            reservations.ForEach((reservation) => {
+                if (courseIndex == 0 && reservation != null && !reservation.IsLab && reservation.Groups)
+                {
+
+                    filteredReservations.Add(reservation);
+                    courseIndex++;
+
+                }
+                else if (courseIndex != 0 && reservation != null && !reservation.IsLab && reservation.Groups)
+                {
+                    courseIndex++;
+                    if (courseIndex >=8 )
+                    {
+                        courseIndex = 0;
+                    }
+                    
+                }
+                else if (courseIndex == 0 && reservation != null && reservation.IsLab && reservation.Groups)
+                {
+                
+                    if (reservation.Subgroup==1) {
+                        filteredReservations.Add(reservation);
+                        
+                    }
+                   
+                   
+                }
+                else 
+                {
+                    courseIndex = 0;
+                    if(reservation != null) {
+                        filteredReservations.Add(reservation);
+                    }
+                   
+                }
+
+
+
+            });
+
+            return filteredReservations != null ?
+                        Ok(filteredReservations) :
                         Problem("Entity set 'ApplicationDBContext.Reservations'  is null.");
         }
 
@@ -101,7 +146,7 @@ namespace GestiuneSaliNET7.Controllers
                 {
 
                  
-                    var subgrupa = 1;
+                    var subgrupa = 0;
                     for (int i = 0; i < 2; i++)
                     {
              
@@ -122,9 +167,10 @@ namespace GestiuneSaliNET7.Controllers
                             IsOnParity = reservationModel.IsOnParity,
                             SubjectName = reservationModel.SubjectName,
                             IsLab = reservationModel.IsLab
-                        }; ;
+                        }; 
                         reservation.Group = "3" + reservation.Serie.Substring(0, 1) + reservationModel.Group + reservation.Serie[1..];
                         reservation.Subgroup = subgrupa;
+                        resList.Add(reservation);
                     }
                     _context.Reservations.AddRange(resList);
                 }
@@ -132,6 +178,7 @@ namespace GestiuneSaliNET7.Controllers
                 {
                         reservation = reservationModel;
                         reservation.Group = "3" + reservation.Serie.Substring(0, 1) + reservationModel.Group + reservation.Serie[1..];
+                        
                         _context.Add(reservation);
                 }
                   await _context.SaveChangesAsync();
@@ -157,7 +204,83 @@ namespace GestiuneSaliNET7.Controllers
             {
                 try
                 {
-                    _context.Update(reservationModel);
+                    var reservation = new ReservationModel();
+                    var resList = new List<ReservationModel>();
+
+
+                    if (!reservationModel.IsLab && reservationModel.Groups)
+                    {
+                        var grupa = 0;
+                        var subgrupa = 0;
+                       
+
+                        for (int i = 0; i < 8; i++)
+                        {
+                            subgrupa = i % 2 == 0 ? 1 : 2;
+                            grupa = i % 2 == 0 ? grupa + 1 : grupa;
+                            reservation = new ReservationModel
+                            {
+                                Id = reservationModel.Id,
+                                Name = reservationModel.Name,
+                                Groups = reservationModel.Groups,
+                                TeacherName = reservationModel.TeacherName,
+                                DayNumber = reservationModel.DayNumber,
+                                RoomName = reservationModel.RoomName,
+                                StartTimeSlot = reservationModel.StartTimeSlot,
+                                TimeSlotsUsed = reservationModel.TimeSlotsUsed,
+                                Group = reservationModel.Group,
+                                Subgroup = reservationModel.Subgroup,
+                                Serie = reservationModel.Serie,
+                                IsOnParity = reservationModel.IsOnParity,
+                                SubjectName = reservationModel.SubjectName,
+                                IsLab = reservationModel.IsLab
+                            }; 
+
+                            reservation.Group = "3" + reservation.Serie.Substring(0, 1) + grupa + reservation.Serie[1..];
+                            reservation.Subgroup = subgrupa;
+                            resList.Add(reservation);
+                        }
+                        _context.Reservations.UpdateRange(resList);
+
+                    }
+                    else if (reservationModel.IsLab && reservationModel.Groups)
+                    {
+
+
+                        var subgrupa = 0;
+                        for (int i = 0; i < 2; i++)
+                        {
+
+                            subgrupa++;
+                            reservation = new ReservationModel
+                            {
+                                Id = reservationModel.Id+i,
+                                Name = reservationModel.Name,
+                                Groups = reservationModel.Groups,
+                                TeacherName = reservationModel.TeacherName,
+                                DayNumber = reservationModel.DayNumber,
+                                RoomName = reservationModel.RoomName,
+                                StartTimeSlot = reservationModel.StartTimeSlot,
+                                TimeSlotsUsed = reservationModel.TimeSlotsUsed,
+                                Group = reservationModel.Group,
+                                Subgroup = reservationModel.Subgroup,
+                                Serie = reservationModel.Serie,
+                                IsOnParity = reservationModel.IsOnParity,
+                                SubjectName = reservationModel.SubjectName,
+                                IsLab = reservationModel.IsLab
+                            }; ;
+                            reservation.Group = "3" + reservation.Serie.Substring(0, 1) + reservationModel.Group + reservation.Serie[1..];
+                            reservation.Subgroup = subgrupa;
+                            resList.Add(reservation);
+                        }
+                        _context.Reservations.UpdateRange(resList);
+                    }
+                    else
+                    {
+                        reservation = reservationModel;
+                        reservation.Group = "3" + reservation.Serie.Substring(0, 1) + reservationModel.Group + reservation.Serie[1..];
+                        _context.Reservations.Update(reservation);
+                    }
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -184,15 +307,57 @@ namespace GestiuneSaliNET7.Controllers
             {
                 return NotFound();
             }
-
             var reservationModel = await _context.Reservations
-                .FirstOrDefaultAsync(m => m.Id == id);
+               .FirstOrDefaultAsync(m => m.Id == id );
             if (reservationModel == null)
             {
                 return NotFound();
             }
+            var reservationRange=new List<ReservationModel>();
+            var idReservation = reservationModel.Id;
+            if(!reservationModel.IsLab && reservationModel.Groups)
+            {
+                for (var i = 0; i <= 7; i++)
+                {
 
-            _context.Reservations.Remove(reservationModel);
+                    reservationModel = await _context.Reservations
+                  .FirstOrDefaultAsync(m => m.Id == id + i);
+                    if (reservationModel == null)
+                    {
+                        return NotFound();
+                    }
+
+                    reservationRange.Add(reservationModel);
+
+
+                }
+            }else if(reservationModel.IsLab && reservationModel.Groups)
+            {
+                for (var i = 0; i <= 1; i++)
+                {
+
+                    reservationModel = await _context.Reservations
+                  .FirstOrDefaultAsync(m => m.Id == id + i);
+                    if (reservationModel == null)
+                    {
+                        return NotFound();
+                    }
+
+                    reservationRange.Add(reservationModel);
+
+
+                }
+            }
+            else
+            {
+                _context.Reservations.Remove(reservationModel);
+            }
+           
+           
+
+           
+
+            _context.Reservations.RemoveRange(reservationRange);
 
             await _context.SaveChangesAsync();
 

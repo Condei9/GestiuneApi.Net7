@@ -8,6 +8,7 @@ using GestiuneSaliNET7.Data;
 using GestiuneSaliNET7.Models;
 using GestiuneSaliNET7.Utils;
 using Microsoft.IdentityModel.Tokens;
+using GestiuneSaliNET7.Interfaces;
 
 namespace GestiuneSaliNET7.Controllers
 {
@@ -108,6 +109,20 @@ namespace GestiuneSaliNET7.Controllers
                         }
 
 
+                        if (userModel.Serie != currentUser.Serie)
+                        {
+                            currentUser.Serie = userModel.Serie;
+                        }
+
+                        if (userModel.Grupa != currentUser.Grupa && !userModel.Serie.IsNullOrEmpty())
+                        {
+                            currentUser.Grupa = "3" + userModel.Serie.Substring(0, 1) + userModel.Grupa + userModel.Serie[1..] ;
+                        }
+
+                        if (userModel.Materie != currentUser.Materie)
+                        {
+                            currentUser.Materie = userModel.Materie;
+                        }
 
 
 
@@ -132,6 +147,25 @@ namespace GestiuneSaliNET7.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            return Ok(userModel);
+        }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> getUsersByMaterie([FromQuery] string? Materie)
+        {
+            if (Materie == null || _context.Users == null)
+            {
+                return NotFound(StatusCode(404));
+            }
+
+            var userModel = await _context.Users.Where(x => x.Materie == Materie).ToListAsync();
+            
+
+            if (userModel == null)
+            {
+                return NotFound(StatusCode(404));
+            }
+
             return Ok(userModel);
         }
 

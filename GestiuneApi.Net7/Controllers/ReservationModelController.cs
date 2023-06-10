@@ -206,6 +206,7 @@ namespace GestiuneSaliNET7.Controllers
                 {
                     var reservation = new ReservationModel();
                     var resList = new List<ReservationModel>();
+                    var reservationUntilUpdate = new ReservationModel();
 
 
                     if (!reservationModel.IsLab && reservationModel.Groups)
@@ -268,7 +269,7 @@ namespace GestiuneSaliNET7.Controllers
                                 IsOnParity = reservationModel.IsOnParity,
                                 SubjectName = reservationModel.SubjectName,
                                 IsLab = reservationModel.IsLab
-                            }; ;
+                            }; 
                             reservation.Group = "3" + reservation.Serie.Substring(0, 1) + reservationModel.Group + reservation.Serie[1..];
                             reservation.Subgroup = subgrupa;
                             resList.Add(reservation);
@@ -276,7 +277,8 @@ namespace GestiuneSaliNET7.Controllers
                         _context.Reservations.UpdateRange(resList);
                     }
                     else
-                    {
+                    { 
+                       
                         reservation = reservationModel;
                         reservation.Group = "3" + reservation.Serie.Substring(0, 1) + reservationModel.Group + reservation.Serie[1..];
                         _context.Reservations.Update(reservation);

@@ -49,6 +49,24 @@ namespace GestiuneSaliNET7.Controllers
             return Ok(roomModel);
         }
 
+        [HttpGet("search")]
+        public async Task<IActionResult> getRoomsByType([FromQuery] bool? labRoom)
+        {
+            if (labRoom == null || _context.Rooms == null)
+            {
+                return NotFound(StatusCode(404));
+            }
+
+            var roomModel = await _context.Rooms.Where(x => x.labRoom == labRoom).ToListAsync();
+
+            if (roomModel == null)
+            {
+                return NotFound(StatusCode(404));
+            }
+
+            return Ok(roomModel);
+        }
+
         // POST: Rooms/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

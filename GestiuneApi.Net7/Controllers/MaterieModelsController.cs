@@ -47,6 +47,8 @@ namespace GestiuneSaliNET7.Controllers
 
             return Ok(materieModel);
         }
+
+       
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Details2(int? id)
         {

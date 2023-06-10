@@ -57,8 +57,19 @@ namespace GestiuneSaliNET7.Controllers
                 if (issuccess.Result != null)
                 {
                     TempData["email"] = userModel.Email;
-                    var res = new { message = "Success", token,issuccess.Result.Id,issuccess.Result.Email,issuccess.Result.Role,issuccess.Result.Name };
-                    return Ok(res);
+                    
+                    if (issuccess.Result.Role == 2)
+                    {
+                       return Ok( new { message = "Success", token, issuccess.Result.Id, issuccess.Result.Email, issuccess.Result.Role, issuccess.Result.Name, issuccess.Result.Serie, issuccess.Result.Grupa });
+                    } else if (issuccess.Result.Role == 1)
+                    {
+                        return Ok( new { message = "Success", token, issuccess.Result.Id, issuccess.Result.Email, issuccess.Result.Role, issuccess.Result.Name, issuccess.Result.Materie });
+                    }else if (issuccess.Result.Role == 0)
+                    {
+                       return Ok( new { message = "Success", token, issuccess.Result.Id, issuccess.Result.Email, issuccess.Result.Role, issuccess.Result.Name });
+                    }
+
+                   
                 }
                 else
                 {

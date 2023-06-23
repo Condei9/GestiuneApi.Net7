@@ -67,6 +67,7 @@ namespace GestiuneSaliNET7.Controllers
             }
 
             return Ok(requestModels);
+            //return Ok(StatusCode(200));
         }
 
         // POST: RequestModels/Create
@@ -80,9 +81,10 @@ namespace GestiuneSaliNET7.Controllers
             {
                 _context.Add(requestModel);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Ok(StatusCode(200));
             }
-            return Ok(requestModel);
+              return Ok(requestModel);
+           // return Ok(StatusCode(200));
         }
 
         // GET: RequestModels/Edit/5
@@ -146,9 +148,10 @@ namespace GestiuneSaliNET7.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Ok(StatusCode(200));
             }
-            return Ok(requestModel);
+            // return Ok(requestModel);
+            return Ok(StatusCode(200));
         }
 
 
@@ -159,21 +162,22 @@ namespace GestiuneSaliNET7.Controllers
         {
             if (id == null || _context.Requests == null)
             {
-                return NotFound();
+                return NotFound(StatusCode(404));
             }
 
             var requestModel = await _context.Requests
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (requestModel == null)
             {
-                return NotFound();
+                return NotFound(StatusCode(404));
             }
 
             _context.Requests.Remove(requestModel);
 
             await _context.SaveChangesAsync();
 
-            return Ok(requestModel);
+            // return Ok(requestModel);
+            return Ok(StatusCode(200));
         }
 
       

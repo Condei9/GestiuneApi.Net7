@@ -143,7 +143,7 @@ namespace GestiuneSaliNET7.Controllers
 
         private bool MaterieModelExists(int id)
         {
-            return (_context.Requests?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Materii?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

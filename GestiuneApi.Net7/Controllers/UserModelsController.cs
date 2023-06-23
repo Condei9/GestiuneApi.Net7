@@ -64,9 +64,11 @@ namespace GestiuneSaliNET7.Controllers
                 userModel.Password = userModel.Password.Hash();
                 _context.Add(userModel);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // return RedirectToAction(nameof(Index));
+                return Ok(StatusCode(200));
             }
-            return Ok(userModel);
+            //  return Ok(userModel);
+            return Ok(StatusCode(200));
         }
 
         // POST: UserModels/Edit/5
@@ -80,13 +82,14 @@ namespace GestiuneSaliNET7.Controllers
             {
                 return NotFound();
             }
+            var currentUser = _context.Users.FirstOrDefault(u => u.Id == id);
 
             if (ModelState.IsValid)
             {
                 try
                 {
                    
-                    var currentUser = _context.Users.FirstOrDefault(u => u.Id == id);
+                  
                  if(currentUser != null) {  
                         if (userModel != null && !userModel.Name.IsNullOrEmpty() && userModel.Name != currentUser.Name)
                         {
@@ -145,9 +148,11 @@ namespace GestiuneSaliNET7.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                // return RedirectToAction(nameof(Index));
+                return Ok(currentUser);
             }
-            return Ok(userModel);
+            // return Ok(userModel);
+            return Ok(currentUser);
         }
 
         [HttpGet("search")]
@@ -175,21 +180,22 @@ namespace GestiuneSaliNET7.Controllers
         {
             if (id == null || _context.Users == null)
             {
-                return NotFound();
+                return NotFound(StatusCode(404));
             }
 
             var userModel = await _context.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (userModel == null)
             {
-                return NotFound();
+                return NotFound(StatusCode(404));
             }
 
             _context.Users.Remove(userModel);
 
             await _context.SaveChangesAsync();
 
-            return Ok(userModel);
+            // return Ok(userModel);
+            return Ok(StatusCode(200));
         }
 
         /*

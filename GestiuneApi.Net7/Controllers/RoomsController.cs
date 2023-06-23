@@ -81,7 +81,8 @@ namespace GestiuneSaliNET7.Controllers
                 //return RedirectToAction(nameof(Index));
                 return Ok(StatusCode(200));
             }
-            return Ok(roomModel);
+            // return Ok(roomModel);
+            return Ok(StatusCode(200));
         }
 
         // POST: Rooms/Edit/5
@@ -116,8 +117,9 @@ namespace GestiuneSaliNET7.Controllers
                 }
                 //return RedirectToAction(nameof(Index));
                 return Ok(StatusCode(200));
-            } 
-            return Ok(roomModel);
+            }
+            // return Ok(roomModel);
+            return Ok(StatusCode(200));
         }
 
         // GET: Rooms/Delete/5

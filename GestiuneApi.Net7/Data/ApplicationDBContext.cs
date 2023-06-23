@@ -32,6 +32,7 @@ namespace GestiuneSaliNET7.Data
 
         public DbSet<MaterieModel> Materii { get; set; }
 
+        public DbSet<SerieModel> Serii { get; set; }
 
     }
 }

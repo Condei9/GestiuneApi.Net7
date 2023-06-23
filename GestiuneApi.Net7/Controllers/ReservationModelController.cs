@@ -100,7 +100,7 @@ namespace GestiuneSaliNET7.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         
-       
+ 
         public async Task<IActionResult> Create([Bind("Groups,TeacherName,DayNumber,RoomId,Time,Duration,Group,Subgroup,Serie,Name")] ReservationModel reservationModel)
         {
             if (ModelState.IsValid)
@@ -183,9 +183,11 @@ namespace GestiuneSaliNET7.Controllers
                 }
                   await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+                // return RedirectToAction(nameof(Index));
+                return Ok(StatusCode(200));
             }
-            return Ok(reservationModel);
+            // return Ok(reservationModel);
+            return Ok(StatusCode(200));
         }
 
         // POST: ReservationModel/Edit/5
@@ -296,9 +298,11 @@ namespace GestiuneSaliNET7.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                // return RedirectToAction(nameof(Index));
+                return Ok(StatusCode(200));
             }
-            return Ok(reservationModel);
+            // return Ok(reservationModel);
+            return Ok(StatusCode(200));
         }
 
         // GET: ReservationModel/Delete/5
@@ -363,7 +367,8 @@ namespace GestiuneSaliNET7.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok(reservationModel);
+            // return Ok(reservationModel);
+            return (StatusCode(200));
         }
 
         /*

@@ -27,7 +27,7 @@ namespace GestiuneSaliNET7.Controllers
             // retrieve all reservations from the database
             var reservations = await _context.Reservations.Where(f => f.Serie == idSerie).ToListAsync();
 
-            // de adaptat algoritmul pt serie
+            
             foreach (var reservation in reservations) 
             {
                 var aux = x.Grupe.FirstOrDefault(a => reservation.Group.Contains(a.Name));
@@ -62,7 +62,7 @@ namespace GestiuneSaliNET7.Controllers
             // retrieve all reservations from the database
             var reservations = await _context.Reservations.Where(f => f.Serie == idSerie).ToListAsync();
 
-            // de adaptat algoritmul pt serie
+            
             foreach (var reservation in reservations)
             {
                 var aux = x.Grupe.FirstOrDefault(a => reservation.Group.Contains(a.Name));

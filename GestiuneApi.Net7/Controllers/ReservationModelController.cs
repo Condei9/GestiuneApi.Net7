@@ -223,7 +223,7 @@ namespace GestiuneSaliNET7.Controllers
                             grupa = i % 2 == 0 ? grupa + 1 : grupa;
                             reservation = new ReservationModel
                             {
-                                Id = reservationModel.Id,
+                                Id = reservationModel.Id+i,
                                 Name = reservationModel.Name,
                                 Groups = reservationModel.Groups,
                                 TeacherName = reservationModel.TeacherName,
@@ -244,6 +244,7 @@ namespace GestiuneSaliNET7.Controllers
                             resList.Add(reservation);
                         }
                         _context.Reservations.UpdateRange(resList);
+                        resList.Clear();
 
                     }
                     else if (reservationModel.IsLab && reservationModel.Groups)

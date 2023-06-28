@@ -44,10 +44,11 @@ namespace GestiuneSaliNET7.Controllers
                     var aux = x.Grupe.FirstOrDefault(a => reservation.Group.Contains(a.Name));
 
                     var subgr = aux.Subgrupe.FirstOrDefault(b => b.Id == reservation.Subgroup);
-
-                    subgr.Week[reservation.DayNumber].Reservations.RemoveAt(reservation.StartTimeSlot + 1);
+                    
+                 var  index = subgr.Week[reservation.DayNumber].Reservations.IndexOf(reservation);
+                    subgr.Week[reservation.DayNumber].Reservations.RemoveAt(index + 1);
                 }
-            }
+            } 
            
             return Ok(x);
         }
@@ -80,7 +81,8 @@ namespace GestiuneSaliNET7.Controllers
 
                     var subgr = aux.Subgrupe.FirstOrDefault(b => b.Id == reservation.Subgroup);
 
-                    subgr.Week[reservation.DayNumber].Reservations.RemoveAt(reservation.StartTimeSlot + 1);
+                    var index = subgr.Week[reservation.DayNumber].Reservations.IndexOf(reservation);
+                    subgr.Week[reservation.DayNumber].Reservations.RemoveAt(index + 1);
                 }
             }
 
